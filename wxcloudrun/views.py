@@ -94,18 +94,14 @@ def wxgzh_zzdpz_project_send_message():
     response = requests.get("http://www.weather.com.cn/data/sk/101010100.html")
     response.encoding = response.apparent_encoding
     # 获取请求体参数
-    params = request.get_json() # 
+    params = request.get_json() #
+    # params = {} #
     tianqi = response.json()
     city = tianqi.get("city","") # 城市
     temp = tianqi.get("temp","") # 温度
     SD = tianqi.get("SD","") # 湿度
     time_ = datetime.fromtimestamp(int(time.time())).strftime("%Y-%m-%d %H:%M:%S")
-    text = """
-        城市：{city}\n
-        温度：{wd} 湿度：{SD}\n
-        当前时间：{time_}
-        微信号：{wxh}\n
-    """.format(city=city,wd=temp,SD=SD,time_=time_,wxh=params.get("FromUserName",""))
+    text = "城市：{city}\n温度：{wd} 湿度：{SD}\n当前时间：{time_}\n微信号：{wxh}\n".format(city=city,wd=temp,SD=SD,time_=time_,wxh=params.get("FromUserName",""))
     info = {
         "ToUserName": params.get("FromUserName",""),
         "FromUserName": params.get("ToUserName",""),
@@ -114,6 +110,6 @@ def wxgzh_zzdpz_project_send_message():
         "Content": text
     }
     print("xyyyyyyyyyy",info)
-    # return json.dumps(info)
-    return info
+    return json.dumps(info)
+    # return info
     # return make_succ_response(response.text)
