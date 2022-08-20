@@ -84,11 +84,22 @@ def wxgzh_zzdpz_project_tianqiyubao():
     # return  response.text#
     return make_succ_response(response.text)
 
-# 获取实时天气预报
+# 获取用户信息
 @app.route('/api/send_message', methods=['get', 'post'])
 def wxgzh_zzdpz_project_send_message():
     response = requests.get("http://www.weather.com.cn/data/sk/101010100.html")
     response.encoding = response.apparent_encoding
     # print(response.text)
     # return  response.text#
-    return make_succ_response(response.text)
+    # 获取请求体参数
+    params = request.get_json()
+    text = response.text
+    info = {
+        "ToUserName": params.get("FromUserName",""),
+        "FromUserName": params.get("ToUserName",""),
+        "CreateTime": params.get("CreateTime",""),
+        "MsgType": text,
+        "Content": '这是回复的消息'
+    }
+    return info
+    # return make_succ_response(response.text)
