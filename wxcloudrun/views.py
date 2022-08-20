@@ -98,8 +98,8 @@ def wxgzh_zzdpz_project_send_message():
         "ToUserName": params.get("FromUserName",""),
         "FromUserName": params.get("ToUserName",""),
         "CreateTime": params.get("CreateTime",""),
-        "MsgType": text,
-        "Content": '这是回复的消息'
+        "MsgType": "text",
+        "Content": text
     }
     return info
     # return make_succ_response(response.text)
