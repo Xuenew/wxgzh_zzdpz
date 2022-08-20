@@ -98,8 +98,9 @@ def wxgzh_zzdpz_project_send_message():
     text = """
         城市：{city}\n
         温度：{wd} 湿度：{SD}\n
+        当前时间：{time_}
         微信号：{wxh}\n
-    """.format(city=city,wd=temp,SD=SD,wxh=params.get("FromUserName",""))
+    """.format(city=city,wd=temp,SD=SD,time_=params.get("CreateTime",""),wxh=params.get("FromUserName",""))
     info = {
         "ToUserName": params.get("FromUserName",""),
         "FromUserName": params.get("ToUserName",""),
