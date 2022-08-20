@@ -101,7 +101,7 @@ def wxgzh_zzdpz_project_send_message():
     city = tianqi.get("weatherinfo",{}).get("city","") # 城市
     temp = tianqi.get("weatherinfo",{}).get("temp","") # 温度
     SD = tianqi.get("weatherinfo",{}).get("SD","") # 湿度
-    time_ = datetime.fromtimestamp(int(time.time())).strftime("%Y-%m-%d %H:%M:%S")
+    time_ = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
     text = "城市：{city}\n温度：{wd} 湿度：{SD}\n当前时间：{time_}\n微信号：{wxh}\n".format(city=city,wd=temp,SD=SD,time_=time_,wxh=params.get("FromUserName",""))
     info = {
         "ToUserName": params.get("FromUserName",""),
