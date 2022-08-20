@@ -108,7 +108,7 @@ def wxgzh_zzdpz_project_send_message():
         "FromUserName": params.get("ToUserName",""),
         "CreateTime": params.get("CreateTime",""),
         "MsgType": "text",
-        "Content": text.encode('iso-8859-1').decode('utf8')
+        "Content": text
     }
     # print("xyyyyyyyyyy",info)
     # return json.dumps(info)
