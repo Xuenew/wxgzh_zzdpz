@@ -97,9 +97,10 @@ def wxgzh_zzdpz_project_send_message():
     params = request.get_json() #
     # params = {} #
     tianqi = response.json()
-    city = tianqi.get("city","") # 城市
-    temp = tianqi.get("temp","") # 温度
-    SD = tianqi.get("SD","") # 湿度
+    # print(tianqi)
+    city = tianqi.get("weatherinfo",{}).get("city","") # 城市
+    temp = tianqi.get("weatherinfo",{}).get("temp","") # 温度
+    SD = tianqi.get("weatherinfo",{}).get("SD","") # 湿度
     time_ = datetime.fromtimestamp(int(time.time())).strftime("%Y-%m-%d %H:%M:%S")
     text = "城市：{city}\n温度：{wd} 湿度：{SD}\n当前时间：{time_}\n微信号：{wxh}\n".format(city=city,wd=temp,SD=SD,time_=time_,wxh=params.get("FromUserName",""))
     info = {
@@ -107,9 +108,9 @@ def wxgzh_zzdpz_project_send_message():
         "FromUserName": params.get("ToUserName",""),
         "CreateTime": params.get("CreateTime",""),
         "MsgType": "text",
-        "Content": text
+        "Content": text.encode('iso-8859-1').decode('utf8')
     }
-    print("xyyyyyyyyyy",info)
-    return json.dumps(info)
-    # return info
+    # print("xyyyyyyyyyy",info)
+    # return json.dumps(info)
+    return info
     # return make_succ_response(response.text)
