@@ -70,4 +70,4 @@ def get_count():
 # xyy测试热更新
 @app.route('/api/test', methods=['get', 'post'])
 def wxgzh_zzdpz_project_test():
-        return "薛忆阳：》》》》"+str(time.time()) #
+        return "薛忆阳：》》》》88888888888"+str(time.time()) #
