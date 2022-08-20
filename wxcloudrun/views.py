@@ -85,7 +85,7 @@ def wxgzh_zzdpz_project_tianqiyubao():
     return make_succ_response(response.text)
 
 # 获取实时天气预报
-@app.route('/api/send_message', methods=['get'])
+@app.route('/api/send_message', methods=['get', 'post'])
 def wxgzh_zzdpz_project_send_message():
     response = requests.get("http://www.weather.com.cn/data/sk/101010100.html")
     response.encoding = response.apparent_encoding
