@@ -5,7 +5,6 @@
 import time
 import requests
 import json
-import datetime
 
 from datetime import datetime
 from flask import render_template, request
@@ -100,7 +99,7 @@ def wxgzh_zzdpz_project_send_message():
     city = tianqi.get("city","") # 城市
     temp = tianqi.get("temp","") # 温度
     SD = tianqi.get("SD","") # 湿度
-    time_ = datetime.datetime.fromtimestamp(int(time.time())).strftime("%Y-%m-%d %H:%M:%S")
+    time_ = datetime.fromtimestamp(int(time.time())).strftime("%Y-%m-%d %H:%M:%S")
     text = """
         城市：{city}\n
         温度：{wd} 湿度：{SD}\n
