@@ -6,6 +6,7 @@ import time
 import requests
 import json
 
+from flask import Response
 from datetime import datetime
 from flask import render_template, request
 from run import app
@@ -112,5 +113,5 @@ def wxgzh_zzdpz_project_send_message():
     }
     # print("xyyyyyyyyyy",info)
     # return json.dumps(info)
-    return info
+    return Response(json.dumps(info), mimetype='application/json')
     # return make_succ_response(response.text)

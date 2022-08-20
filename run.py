@@ -1,3 +1,7 @@
+# -*- coding:utf-8 -*-
+# 享受雷霆感受雨露
+# author xyy,time:2020/7/1
+
 # 创建应用实例
 import sys
 
