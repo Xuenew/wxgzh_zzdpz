@@ -1,3 +1,5 @@
+import time
+
 from datetime import datetime
 from flask import render_template, request
 from run import app
@@ -64,3 +66,8 @@ def get_count():
     """
     counter = Counters.query.filter(Counters.id == 1).first()
     return make_succ_response(0) if counter is None else make_succ_response(counter.count)
+
+# xyy测试热更新
+@app.route('/api/test', methods=['get', 'post'])
+def wxgzh_zzdpz_project_test():
+        return "薛忆阳：》》》》"+str(time.time()) #
