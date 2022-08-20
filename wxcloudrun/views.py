@@ -108,5 +108,6 @@ def wxgzh_zzdpz_project_send_message():
         "Content": text
     }
     print("xyyyyyyyyyy",info)
-    return json.dumps(info)
+    # return json.dumps(info)
+    return info
     # return make_succ_response(response.text)
