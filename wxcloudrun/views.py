@@ -101,5 +101,6 @@ def wxgzh_zzdpz_project_send_message():
         "MsgType": "text",
         "Content": text
     }
+    print("xyyyyyyyyyy",info)
     return info
     # return make_succ_response(response.text)
