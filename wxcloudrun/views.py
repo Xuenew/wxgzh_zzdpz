@@ -1,4 +1,6 @@
 import time
+import requests
+import json
 
 from datetime import datetime
 from flask import render_template, request
@@ -70,4 +72,13 @@ def get_count():
 # xyy测试热更新
 @app.route('/api/test', methods=['get', 'post'])
 def wxgzh_zzdpz_project_test():
-        return "薛忆阳：》》》》88888888888"+str(time.time()) #
+
+    return "薛忆阳：》》》》88888888888"+str(time.time()) #
+
+# 获取实时天气预报
+@app.route('/api/tianqiyubao', methods=['get'])
+def wxgzh_zzdpz_project_tianqiyubao():
+    response = requests.get("http://www.weather.com.cn/data/sk/101010100.html")
+    response.encoding = response.apparent_encoding
+    # print(response.text)
+    return  response.text#
