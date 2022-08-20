@@ -89,11 +89,17 @@ def wxgzh_zzdpz_project_tianqiyubao():
 def wxgzh_zzdpz_project_send_message():
     response = requests.get("http://www.weather.com.cn/data/sk/101010100.html")
     response.encoding = response.apparent_encoding
-    # print(response.text)
-    # return  response.text#
     # 获取请求体参数
-    params = request.get_json()
-    text = response.text
+    params = request.get_json() # 
+    tianqi = response.json()
+    city = tianqi.get("city","") # 城市
+    temp = tianqi.get("temp","") # 温度
+    SD = tianqi.get("SD","") # 湿度
+    text = """
+        城市：{city}\n
+        温度：{wd} 湿度：{SD}\n
+        微信号：{wxh}\n
+    """.format(city=city,wd=temp,SD=SD,wxh=params.get("FromUserName",""))
     info = {
         "ToUserName": params.get("FromUserName",""),
         "FromUserName": params.get("ToUserName",""),
