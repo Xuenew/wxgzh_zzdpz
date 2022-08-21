@@ -122,7 +122,7 @@ def wxgzh_zzdpz_project_send_message():
         #                                                                                headers=request_headers)
         text = "城市: {city}\n温度: {temp} 体感温度: {feelsLike}\n今日天气: {weather}\n当前时间: {time_}\n{famal_pepole_name}--{famal_pepole_conten}\n{headers}".format(
             city=city,temp=temp,weather=weather,
-            feelsLike=feelsLike,time_=time_,wxh=params.get("FromUserName",""),
+            feelsLike=feelsLike,time_=time_,
             famal_pepole_name = famal_pepole_name,famal_pepole_conten=famal_pepole_conten,
             headers=request_headers)
         info = {
