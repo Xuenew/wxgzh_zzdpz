@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # 享受雷霆感受雨露
 # author xyy,time:2020/7/1
-
+import random
 import time
 import requests
 import json
@@ -93,34 +93,52 @@ def wxgzh_zzdpz_project_tianqiyubao():
 # 获取用户信息
 @app.route('/api/send_message', methods=['get', 'post'])
 def wxgzh_zzdpz_project_send_message():
-    response = requests.get("http://www.weather.com.cn/data/sk/101010100.html")
-    response.encoding = response.apparent_encoding
-    # 获取请求体参数
     params = request.get_json() #
     # params = {
     #     "ToUserName": "gh_064723a33050",
     #     "FromUserName": "oVzmb0vAA3Z2IZXLgiiUM6WoAVbY",
     #     "CreateTime": "",
+    #     "Content": "北京",
     #
-    # } #
-    tianqi = response.json()
-    # print(tianqi)
-    city = tianqi.get("weatherinfo",{}).get("city","") # 城市
-    temp = tianqi.get("weatherinfo",{}).get("temp","") # 温度
-    SD = tianqi.get("weatherinfo",{}).get("SD","") # 湿度
-    time_ = datetime.strftime(datetime.now().astimezone(pytz.timezone("Asia/Shanghai")), '%Y-%m-%d %H:%M:%S')
-    text = "城市：{city}\n温度：{wd} 湿度：{SD}\n当前时间：{time_}\n微信号：{wxh}\n".format(city=city,wd=temp,SD=SD,time_=time_,wxh=params.get("FromUserName",""))
-    info = {
-        "ToUserName": params.get("FromUserName",""),
-        "FromUserName": params.get("ToUserName",""),
-        "CreateTime": params.get("CreateTime",""),
-        "MsgType": "text",
-        "Content": text
-    }
-    # print("xyyyyyyyyyy",info)
-    # print("xyyyyyyyyyy",time_)
-    return json.dumps(info,ensure_ascii=False)
-    # return Response(json.dumps(info), mimetype='application/json')
-    # return Response(info, mimetype='application/json')
-    # return info
-    # return make_succ_response(response.text)
+    # }  #
+    #
+    request_headers = request.headers
+    user_send_to_server_message = params.get("Content","")
+    if "天气" in user_send_to_server_message:
+        # 和风API接口
+        tianqi = requests.get("https://devapi.qweather.com/v7/weather/now?location=101010100&key=d4aa225a004440be8d7fe92bdb244bd9").json()
+        # 获取名人名言
+        response_mrmy = requests.get("http://api.xiaocongjisuan.com/life/dictum/get?appKey=FEokBpQdh4NY&openId=Yt5NYZtRJp4xE800&currentPage={}&pageSize=10&dType=json".format(random.randint(1,100))).json()
+        # print(tianqi)
+        city = "北京市"# 城市
+        temp = tianqi.get("now",{}).get("temp","") # 温度
+        feelsLike = tianqi.get("now",{}).get("feelsLike","") # 体感温度
+        weather = tianqi.get("now",{}).get("text","") # 当前天气
+        time_ = datetime.strftime(datetime.now().astimezone(pytz.timezone("Asia/Shanghai")), '%Y-%m-%d %H:%M:%S')
+        mrmy_inf0 = random.choice(response_mrmy.get("data",{}).get("dictums",[]))
+        famal_pepole_name = mrmy_inf0.get("author","")
+        famal_pepole_conten = mrmy_inf0.get("content","")
+        # text = "城市：{city}\n当前温度：{wd} 体感温度：{SD}\n当前时间：{time_}\n微信号：{wxh}\n{headers}".format(city=city,wd=temp,SD=SD,time_=time_,wxh=params.get("FromUserName",""),
+        #                                                                                headers=request_headers)
+        text = "城市: {city}\n温度: {temp} 体感温度: {feelsLike}\n今日天气: {weather}\n当前时间: {time_}\n{famal_pepole_name}--{famal_pepole_conten}\n{headers}".format(
+            city=city,temp=temp,weather=weather,
+            feelsLike=feelsLike,time_=time_,wxh=params.get("FromUserName",""),
+            famal_pepole_name = famal_pepole_name,famal_pepole_conten=famal_pepole_conten,
+            headers=request_headers)
+        info = {
+            "ToUserName": params.get("FromUserName",""),
+            "FromUserName": params.get("ToUserName",""),
+            "CreateTime": params.get("CreateTime",""),
+            "MsgType": "text",
+            "Content": text
+        }
+        return json.dumps(info,ensure_ascii=False)
+    else:
+        info = {
+            "ToUserName": params.get("FromUserName",""),
+            "FromUserName": params.get("ToUserName",""),
+            "CreateTime": params.get("CreateTime",""),
+            "MsgType": "text",
+            "Content": "查询天气请回复 北京天气，其余功能还在完善中。"
+        }
+        return json.dumps(info,ensure_ascii=False)
