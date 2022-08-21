@@ -120,11 +120,12 @@ def wxgzh_zzdpz_project_send_message():
         famal_pepole_conten = mrmy_inf0.get("content","")
         # text = "城市：{city}\n当前温度：{wd} 体感温度：{SD}\n当前时间：{time_}\n微信号：{wxh}\n{headers}".format(city=city,wd=temp,SD=SD,time_=time_,wxh=params.get("FromUserName",""),
         #                                                                                headers=request_headers)
-        text = "城市: {city}\n温度: {temp} 体感温度: {feelsLike}\n今日天气: {weather}\n当前时间: {time_}\n{famal_pepole_name}--{famal_pepole_conten}\n{headers}".format(
+        text = "城市: {city}\n温度: {temp} 体感温度: {feelsLike}\n今日天气: {weather}\n当前时间: {time_}\n{famal_pepole_name}---{famal_pepole_conten}".format(
             city=city,temp=temp,weather=weather,
             feelsLike=feelsLike,time_=time_,
             famal_pepole_name = famal_pepole_name,famal_pepole_conten=famal_pepole_conten,
-            headers=request_headers)
+            # headers=request_headers
+        )
         info = {
             "ToUserName": params.get("FromUserName",""),
             "FromUserName": params.get("ToUserName",""),
