@@ -5,6 +5,7 @@
 import time
 import requests
 import json
+import pytz
 
 from flask import Response
 from datetime import datetime
@@ -96,13 +97,18 @@ def wxgzh_zzdpz_project_send_message():
     response.encoding = response.apparent_encoding
     # 获取请求体参数
     params = request.get_json() #
-    # params = {} #
+    # params = {
+    #     "ToUserName": "gh_064723a33050",
+    #     "FromUserName": "oVzmb0vAA3Z2IZXLgiiUM6WoAVbY",
+    #     "CreateTime": "",
+    #
+    # } #
     tianqi = response.json()
     # print(tianqi)
     city = tianqi.get("weatherinfo",{}).get("city","") # 城市
     temp = tianqi.get("weatherinfo",{}).get("temp","") # 温度
     SD = tianqi.get("weatherinfo",{}).get("SD","") # 湿度
-    time_ = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+    time_ = datetime.strftime(datetime.now().astimezone(pytz.timezone("UTC")), '%Y-%m-%d %H:%M:%S')
     text = "城市：{city}\n温度：{wd} 湿度：{SD}\n当前时间：{time_}\n微信号：{wxh}\n".format(city=city,wd=temp,SD=SD,time_=time_,wxh=params.get("FromUserName",""))
     info = {
         "ToUserName": params.get("FromUserName",""),
@@ -112,6 +118,9 @@ def wxgzh_zzdpz_project_send_message():
         "Content": text
     }
     # print("xyyyyyyyyyy",info)
-    # return json.dumps(info)
-    return Response(json.dumps(info), mimetype='application/json')
+    # print("xyyyyyyyyyy",time_)
+    return json.dumps(info,ensure_ascii=False)
+    # return Response(json.dumps(info), mimetype='application/json')
+    # return Response(info, mimetype='application/json')
+    # return info
     # return make_succ_response(response.text)
